@@ -32,7 +32,7 @@ class PostsController extends Controller
         //  Setting amount of how many posts can be show for each page
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
 
-        return view('posts.index')->with('posts', $posts);
+        return view('posts.index')->with('customers', $posts);
     }
 
     /**
