@@ -11,4 +11,17 @@ class ProductsController extends Controller
         $products = Products::all();
         return view("products.index")->with('products', $products);
     }
+
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $product = Products::find($id);
+        return view('products/show')->with('product', $product);
+    }
 }
