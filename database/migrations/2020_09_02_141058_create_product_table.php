@@ -17,13 +17,18 @@ class CreateProductTable extends Migration
             $table->increments('Product_ID');
             $table->timestamps();
             $table->string('ProductName');
-            $table->integer('Category_ID');
+            // $table->unsignedBigInteger('Category_ID');
+            // $table->foreign("Category_ID")
+            //         ->references('Category_ID')
+            //         ->on('order_category');
             $table->string('Description');
             $table->double('Price');
             $table->string('Image');
             $table->string('Brand');
             
         });
+
+        
     }
 
     /**

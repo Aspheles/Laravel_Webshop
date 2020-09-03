@@ -30,4 +30,26 @@ class CustomersController extends Controller
         return view('customers.index')->with('customers', $customers);
     }
 
+    public function create()
+    {
+        return view('customers.create');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, ['FirstName' => 'required', 'LastName' => 'required', 'Street' => 'required', 'City' => 'required', 'Zip' => 'required', 'Phone' => 'required']);
+
+        // Create post
+        $customer = new Customer;
+        $customer->FirstName = $request->input('FirstName');
+        $customer->LastName = $request->input('LastName');
+        $customer->Street = $request->input('Street');
+        $customer->City = $request->input('City');
+        $customer->Zip = $request->input('Zip');
+        $customer->Phone = $request->input('Phone');
+        $customer->save();
+
+        return redirect('/customers')->with('success', 'Customer Created');
+
+    }
 }
