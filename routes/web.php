@@ -33,5 +33,6 @@ Route::get('/services', 'PagesController@services');
 Route::resource("posts", "PostsController");
 Route::resource("customers", "CustomersController");
 Route::resource("products", "ProductsController");
+Route::resource("categories", "CategoryController");
 
 
