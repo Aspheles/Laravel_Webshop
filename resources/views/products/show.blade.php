@@ -8,8 +8,6 @@
 
     <div class="row justify-content-center">
 
-      
-
       <div class="col-lg-9">
 
         <div class="card mt-4">

@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Products;
+use DB;
 
 class CategoryController extends Controller
 {
     function index(){
 
         $categories = Category::all();
-        return view("categories.index")->with('categories', $categories);
+        $products = Products::all();
+        return view("categories.index")->with('categories', $categories)->with('products', $products);
     }
 
 
@@ -22,7 +25,27 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $product = Products::find($id);
-        return view('products/show')->with('product', $product);
+        $categories = Category::all();
+
+        //$filteredproducts = Products::where('category_id', $id)->get();
+
+
+        //$posts = DB::select('SELECT * FROM posts');
+
+        //$filteredproducts = DB::select('SELECT * FROM `product` WHERE `category_id` = :id', ['id' => $id]);
+
+        //$filteredproducts = Products::find('category_id', $id)->get();
+
+        //$Allfilteredproducts = Products::all();
+        // $filteredproducts = $Allfilteredproducts->category_id->get();
+
+        // if($id == $filteredproducts){
+        //     return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts);
+        // }
+        $filteredproducts = Products::where('category_id', $id)->get();
+        
+        //return view('categories/show')->with(['products'=> $products, 'categories'=> $categories]);
+
+        return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts);
     }
 }

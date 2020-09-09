@@ -12,4 +12,6 @@ class Products extends Model
      public $primaryKey = "Product_ID";
      // Timestamps
      public $timestamps = true;
+
+     //public $category_id = "category_id";
 }
