@@ -46,7 +46,7 @@
                     <a class="nav-link" href="/products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cart.html">Cart</a>
+                    <a class="nav-link" href="/cart">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/about">Contact</a>
@@ -62,10 +62,14 @@
                         </button>
                     </div>
                 </div>
-                <a class="btn btn-success btn-sm ml-3" href="cart.html">
+                <a class="btn btn-success btn-sm ml-3" href="/cart">
                     <i class="fa fa-shopping-cart"></i> Cart
-                    <span class="badge badge-light">3</span>
+                    <span class="badge badge-light"></span>
                 </a>
+                <a class="btn btn-danger btn-sm ml-3" href="/signup">
+                  <i class="fa fa-user"></i> Login
+                  <span class="badge badge-light"></span>
+              </a>
             </form>
         </div>
     </div>

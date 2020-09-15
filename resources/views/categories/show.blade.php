@@ -77,9 +77,9 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="categories">Category</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Sub-category</li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/categories">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$currentCategory[0]->name}}</li>
                 </ol>
             </nav>
         </div>
@@ -112,17 +112,17 @@
                     @if(count($filteredproducts) > 0)
                         @foreach($filteredproducts as $filteredproduct)
                         <div class="col-5">
-                            <div class="card m-2">
-                                <img class="card-img-top d-flex align-items-stretch" src="../images/{{$filteredproduct->Image}}" alt="Card image cap">
+                            <div class="card m-2 ">
+                                <img class="card-img-top " src="../images/{{$filteredproduct->Image}}" alt="Card image cap">
                                 <div class="card-body">
                                     <h4 class="card-title"><a href="/products/{{$filteredproduct->Product_ID}}" title="View Product">{{$filteredproduct->ProductName}}</a></h4>
                                     <p class="card-text">{{$filteredproduct->Description}}</p>
-                                    <p>Category id: {{$filteredproduct->category_id}}</p>
+                                    {{-- <p>Category id: {{$filteredproduct->category_id}}</p> --}}
                                     <div class="row">
-                                        <div class="col d-flex align-items-stretch">
+                                        <div class="col">
                                             <p class="btn btn-danger btn-block">{{$filteredproduct->Price}} $</p>
                                         </div>
-                                        <div class="col d-flex align-items-stretch">
+                                        <div class="col">
                                             <a href="#" class="btn btn-success btn-block">Add to cart</a>
                                         </div>
                                     </div>

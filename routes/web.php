@@ -34,5 +34,34 @@ Route::resource("posts", "PostsController");
 Route::resource("customers", "CustomersController");
 Route::resource("products", "ProductsController");
 Route::resource("categories", "CategoryController");
+//Route::resource("users", "UsersController");
+
+Route::get('/signup', [
+    'uses'=> 'UserController@getSignup',
+    'as'=> 'user.signup'
+]);
+
+Route::post('/signup', [
+    'uses'=> 'UserController@postSignup',
+    'as'=> 'user.signup'
+]);
+
+
+Route::get('/signin', [
+    'uses'=> 'UserController@getSignin',
+    'as'=> 'user.signin'
+]);
+
+Route::post('/signin', [
+    'uses'=> 'UserController@postSignin',
+    'as'=> 'user.signin'
+]);
+
+
+
+Route::get('/user/profile', [
+    'uses'=> 'UserController@getProfile',
+    'as'=> 'user.profile'
+]);
 
 

@@ -14,10 +14,10 @@
           <img class="card-img-top img-fluid" src="../images/{{$product->Image}}" alt="">
           <div class="card-body">
             <h3 class="card-title">{{$product->ProductName}}</h3>
-            <h4>$24.99</h4>
+            <h4>${{$product->Price}}</h4>
             <p class="card-text">{{$product->Description}}</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            4.0 stars
+           
           </div>
         </div>
       

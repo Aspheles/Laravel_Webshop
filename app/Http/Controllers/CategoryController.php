@@ -27,6 +27,8 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
+        $currentCategory = Category::where("id", $id)->get();
+
         //$filteredproducts = Products::where('category_id', $id)->get();
 
 
@@ -46,6 +48,6 @@ class CategoryController extends Controller
         
         //return view('categories/show')->with(['products'=> $products, 'categories'=> $categories]);
 
-        return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts);
+        return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts)->with('currentCategory', $currentCategory);
     }
 }

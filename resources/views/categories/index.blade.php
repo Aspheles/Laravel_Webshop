@@ -7,9 +7,9 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="categories">Category</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Sub-category</li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/categories">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">All Products</li>
                 </ol>
             </nav>
         </div>
@@ -46,10 +46,10 @@
                                 <h4 class="card-title"><a href="/products/{{$product->Product_ID}}" title="View Product">{{$product->ProductName}}</a></h4>
                                 <p class="card-text">{{$product->Description}}</p>
                                 <div class="row">
-                                    <div class="col d-flex align-items-stretch">
+                                    <div class="col">
                                         <p class="btn btn-danger btn-block">{{$product->Price}} $</p>
                                     </div>
-                                    <div class="col d-flex align-items-stretch">
+                                    <div class="col">
                                         <a href="#" class="btn btn-success btn-block">Add to cart</a>
                                     </div>
                                 </div>
