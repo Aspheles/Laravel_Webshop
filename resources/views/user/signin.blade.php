@@ -26,11 +26,13 @@
                       <input type="checkbox"> Please accept the terms and conditions to proceed with your request.
                     </label>
                   </div>
+                  
                 </div>
                 <div class="form-group">
                   <button type="submit" class="btn btn-success btn-block"  value="SUBMIT">Login</button>
                   {{ csrf_field() }}
                 </div>
+                <a class="justify-content-center" href="{{route('user.signup')}}">Register</a>
               </form>
             </article>
           </div>

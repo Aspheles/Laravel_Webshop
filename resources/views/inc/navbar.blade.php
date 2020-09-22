@@ -66,10 +66,27 @@
                     <i class="fa fa-shopping-cart"></i> Cart
                     <span class="badge badge-light"></span>
                 </a>
-                <a class="btn btn-danger btn-sm ml-3" href="/signup">
+               
+               
+               @if(Auth::check())
+                <a class="btn btn-danger btn-sm ml-3" href="{{route('user.profile')}}">
+                  <i class="fa fa-user"></i> User Profile
+                  <span class="badge badge-light"></span>
+                </a>
+                <a class="btn btn-danger btn-sm ml-3" href="{{route('user.logout')}}">
+                  <i class="icon-signout"></i> Logout
+                  <span class="badge badge-light"></span>
+                </a>
+               @else
+                <a class="btn btn-danger btn-sm ml-3" href="{{route('user.signin')}}">
                   <i class="fa fa-user"></i> Login
                   <span class="badge badge-light"></span>
-              </a>
+                </a>
+               @endif
+                
+                
+
+                
             </form>
         </div>
     </div>

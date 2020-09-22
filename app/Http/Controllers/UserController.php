@@ -23,9 +23,9 @@ class UserController extends Controller
         ]);
         $user->save();
 
-        
+        Auth::Login($user);
 
-        return redirect('/')->with('success', 'User has been Created');
+        return redirect()->route('user.profile')->with('success', 'Account has been Created');
     }
 
     public function getSignin(){
@@ -41,11 +41,16 @@ class UserController extends Controller
             {
                 return redirect()->route('user.profile');
             }
-            return redirect()->back();
+            return redirect()->back()->with("error", "Username or Password is incorrect");
     }
 
 
     public function getProfile(){
         return view('user.profile');
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return redirect('/')->with("success", "You have successfully logged out");
     }
 }
