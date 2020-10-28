@@ -42,9 +42,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/categories">Store</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="/products">Products</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Cart</a>
                 </li>
@@ -62,9 +62,9 @@
                         </button>
                     </div>
                 </div>
-                <a class="btn btn-success btn-sm ml-3" href="/cart">
+                <a class="btn btn-success btn-sm ml-3" href="{{route('product.getShoppingCart')}}">
                     <i class="fa fa-shopping-cart"></i> Cart
-                    <span class="badge badge-light"></span>
+                    <span class="badge badge-light">{{Session::has('cart') ? Session::get('cart')->totalQuantity : ''}}</span>
                 </a>
                
                

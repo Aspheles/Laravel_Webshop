@@ -50,7 +50,8 @@
                                         <p class="btn btn-danger btn-block">{{$product->Price}} $</p>
                                     </div>
                                     <div class="col">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                                    <a href="{{route('product.addToCart', ['id' => $product->Product_ID])}}" class="btn btn-success btn-block">Add to cart</a>
+                                   
                                     </div>
                                 </div>
                             </div>

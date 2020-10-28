@@ -37,7 +37,36 @@ Route::resource("categories", "CategoryController");
 //Route::resource("users", "UsersController");
 
 
+Route::get('/shopping-cart', [
+    'uses' => 'CartController@getShoppingCart',
+	'as' => 'product.getShoppingCart'
+]);
 
+
+// Route::post('/updateCart/{id}', [
+// 	'uses' => 'CartController@updateCart',
+// 	'as' => 'shoppingcart.updateCart'
+// ]);
+
+// Route::get('/deleteFromCart/{id}', [
+// 	'uses' => 'CartController@deleteFromCart',
+// 	'as' => 'shoppingcart.deleteFromCart'	
+// ]);
+
+// Route::post('/saveOrder', [
+// 	'uses' => 'CartController@saveOrder',
+// 	'as' => 'shop.saveOrder'		
+// ]);
+
+Route::get('/addToCart/{id}', [
+	'uses' => 'ProductsController@addToCart',
+	'as' => 'product.addToCart'
+]);
+
+Route::get('/updateQuantity/{item}', [
+    'uses' => 'CartController@updateQuantity',
+	'as' => 'product.updateQuantity'
+]);
 
 Route::group(['prefix'=> 'user'], function(){
     Route::group(['middleware'=> 'guest'], function(){

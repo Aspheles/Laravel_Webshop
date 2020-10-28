@@ -9,7 +9,9 @@ class PagesController extends Controller
     public function index(){
         $title = "Welcome to my website";
         //return view('pages.index', compact('title'));
-        return view('pages.index')->with('title', $title);
+        //return view('pages.index')->with('title', $title);
+        
+        return redirect()->route('categories.index');
     }
 
     public function about(){
