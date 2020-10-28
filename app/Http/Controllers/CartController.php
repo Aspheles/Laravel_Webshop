@@ -25,20 +25,37 @@ class CartController extends Controller
 
     }
 
-    public function updateQuantity(Request $request, $id){
-        
+    public function updateQuantity(Request $request, $id, $action){
+
         
         $cart = Session::get('cart');
-        $product = Products::find($id);
-        $cart->items[$id]['qty']++;
-        // $cart->update($cart->items[$id], $product);
-        $cart->items[$id]['price'] = $product->Price * $cart->items[$id]['qty'];
-        $cart->totalQuantity++;
-        $cart->totalPrice = 0;
-        foreach($cart->items as $item){
-            $cart->totalPrice = $cart->totalPrice += $item['price'];
+
+        if($cart != null){
+            $product = Products::find($id);
+
+            if($action == "add"){
+                $cart->items[$id]['qty']++;
+            }else{
+                $cart->items[$id]['qty']--;
+            }
+    
+            if($cart->items[$id]['qty'] <= 0){
+               unset($cart->items[$id]);
+            }else{
+                $cart->items[$id]['price'] = $product->Price * $cart->items[$id]['qty'];
+            }
+            
+            // $cart->update($cart->items[$id], $product);
+            
+           
+            $this->updateCart($cart, $request);
+    
+            
+    
+            
+            
+            
         }
-        
         return redirect()->route('product.getShoppingCart');
 
     
@@ -46,20 +63,39 @@ class CartController extends Controller
 
     }
    
-    // public function deleteFromCart(Request $request, $id){
-    //     if (!Session::has('cart')) {
-    //         return view('shop.shopping-cart')->with('message', 'Error, geen shoppingcart gevonden !');
-    //     }  
-    //     $oldCart = Session::has('cart') ? Session::get('cart') : null;
-    //     $cart = new Cart($oldCart); 
-    //     $product = Product::find($id);
+    public function removeFromCart(Request $request, $id){
+      
+        $cart = Session::has('cart') ? Session::get('cart') : null;
+        $product = Products::find($id);
 
-    //     foreach($cart->items as $item){
-    //         if ($item['id'] == $id){               
-    //             $cart->delete($item, $id);         
-    //         }
-    //     }
+        //$cart->totalPrice -= $cart->items[$id]
 
-    //     return redirect()->route('shop.shopping-cart');         
-    // }
+        unset($cart->items[$id]);
+        $this->updateCart($cart, $request);
+
+        // foreach($cart->items as $item){
+        //     if ($item[$id] == $id){               
+        //         $cart->delete($item, $id);         
+        //     }
+        // }
+
+        return redirect()->route('product.getShoppingCart');         
+    }
+
+
+    public function updateCart($cart, $request){
+        $cart->totalPrice = 0;
+        $cart->totalQuantity = 0;
+
+        foreach($cart->items as $item){
+            $cart->totalPrice = $cart->totalPrice += $item['price'];
+            $cart->totalQuantity = $cart->totalQuantity + $item['qty'];
+
+        }
+
+        if($cart->totalQuantity <= 0){
+            $request->session()->flush();
+            return redirect()->route('categories.index');
+        }
+    }
 }

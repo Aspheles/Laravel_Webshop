@@ -48,10 +48,10 @@ Route::get('/shopping-cart', [
 // 	'as' => 'shoppingcart.updateCart'
 // ]);
 
-// Route::get('/deleteFromCart/{id}', [
-// 	'uses' => 'CartController@deleteFromCart',
-// 	'as' => 'shoppingcart.deleteFromCart'	
-// ]);
+Route::get('/removeFromCart/{id}', [
+	'uses' => 'CartController@removeFromCart',
+	'as' => 'product.removeFromCart'	
+]);
 
 // Route::post('/saveOrder', [
 // 	'uses' => 'CartController@saveOrder',
@@ -63,7 +63,7 @@ Route::get('/addToCart/{id}', [
 	'as' => 'product.addToCart'
 ]);
 
-Route::get('/updateQuantity/{item}', [
+Route::get('/updateQuantity/{item}/{action}', [
     'uses' => 'CartController@updateQuantity',
 	'as' => 'product.updateQuantity'
 ]);
