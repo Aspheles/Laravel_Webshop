@@ -42,11 +42,17 @@ Route::get('/shopping-cart', [
 	'as' => 'product.getShoppingCart'
 ]);
 
+Route::get('/checkout', [
+    'uses' => 'CartController@getCheckout',
+	'as' => 'product.getCheckout'
+]);
 
-// Route::post('/updateCart/{id}', [
-// 	'uses' => 'CartController@updateCart',
-// 	'as' => 'shoppingcart.updateCart'
-// ]);
+Route::post('/checkout', [
+    'uses' => 'CartController@postCheckout',
+	'as' => 'product.postCheckout'
+]);
+
+
 
 Route::get('/removeFromCart/{id}', [
 	'uses' => 'CartController@removeFromCart',

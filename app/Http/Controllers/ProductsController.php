@@ -35,11 +35,12 @@ class ProductsController extends Controller
         $product = Products::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
-        $cart->add($product, $product->Product_ID);
+        $cart->add($product, $product->id);
+        
         
         
         $request->session()->put('cart',$cart);
-        return redirect()->back();
+        return redirect()->back()->with('success',"$product->name has been added to your cart");
 
     }
 

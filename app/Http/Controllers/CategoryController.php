@@ -44,7 +44,7 @@ class CategoryController extends Controller
         // if($id == $filteredproducts){
         //     return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts);
         // }
-        $filteredproducts = Products::where('category_id', $id)->get();
+        $filteredproducts = Products::where('categoryid', $id)->get();
         
         //return view('categories/show')->with(['products'=> $products, 'categories'=> $categories]);
 

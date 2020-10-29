@@ -21,6 +21,7 @@ class CreateProductTable extends Migration
             $table->double('price');
             $table->string('image');
             $table->string('brand');
+            $table->integer('categoryid');
             
         });
 

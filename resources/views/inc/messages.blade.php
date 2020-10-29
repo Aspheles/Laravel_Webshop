@@ -7,14 +7,15 @@
 @endif
 
 @if(session('success'))
-    <div class="alert alert-success m-3">
-        {{session('success')}}
+    <div id="success" class="alert alert-success m-3 text-center">
+        <h3>{{session('success')}}</h3>
     </div>
 @endif
 
 
 @if(session('error'))
-    <div class="alert alert-danger m-3">
-        {{session('error')}}
+    <div id="error" class="alert alert-danger m-3 text-center">
+        <h3>{{session('error')}}</h3>
     </div>
 @endif
+

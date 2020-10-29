@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Products;
 use Session;
 use App\Cart;
+use App\Order;
+use Auth;
 
 class CartController extends Controller
 {
@@ -15,7 +17,8 @@ class CartController extends Controller
     */
     public function getShoppingCart() {
     	if (!Session::has('cart')) {
-    		return view('shop.shopping-cart')->with('message', 'Error, geen shoppingcart gevonden !');
+            //return view('shop.shopping-cart')->with('error', 'Error, geen shoppingcart gevonden !');
+            return redirect()->route("categories.index")->with("error", "Your cart is empty");
     	}
     	$oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
@@ -42,7 +45,7 @@ class CartController extends Controller
             if($cart->items[$id]['qty'] <= 0){
                unset($cart->items[$id]);
             }else{
-                $cart->items[$id]['price'] = $product->Price * $cart->items[$id]['qty'];
+                $cart->items[$id]['price'] = $product->price * $cart->items[$id]['qty'];
             }
             
             // $cart->update($cart->items[$id], $product);
@@ -56,9 +59,9 @@ class CartController extends Controller
             
             
         }
+        
         return redirect()->route('product.getShoppingCart');
-
-    
+        
         
 
     }
@@ -97,5 +100,43 @@ class CartController extends Controller
             $request->session()->flush();
             return redirect()->route('categories.index');
         }
+    }
+
+
+    public function getCheckout(){
+        if(!Session::has('cart')){
+            return redirect()->route('categories.index');
+        }
+        $cart = Session::get('cart');
+        return view('shop.checkout', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQuantity' => $cart->totalQuantity]);
+    }
+
+
+    public function postCheckout(Request $request){
+        //Checking if cart exist so the purchase can be stored into the database
+        if(!Session::has('cart')){
+            return redirect()->route('categories.index');
+        }
+
+        $cart = Session::get('cart');
+
+        //Create Order
+        $order = new Order();
+        $order->cart = serialize($cart);
+        $order->name = $request->input('name');
+        $order->address = $request->input('address');
+        $order->email = $request->input('email');
+
+        if(Auth::check()){
+            Auth::user()->orders()->save($order);
+        }else{
+            $order->user_id = 0;
+        }
+        $order->save();
+
+        //Empty the shoppingcart after purchase
+        session()->forget('cart');
+        
+        return redirect()->route('categories.index')->with('success', 'Successfully purchased products!');
     }
 }

@@ -41,16 +41,16 @@
                     @foreach($products as $product)
                     <div class="col-5">
                         <div class="card m-2">
-                            <img class="card-img-top d-flex align-items-stretch" src="../images/{{$product->Image}}" alt="Card image cap">
+                            <img class="card-img-top d-flex align-items-stretch" src="../images/{{$product->image}}" alt="Card image cap">
                             <div class="card-body">
-                                <h4 class="card-title"><a href="/products/{{$product->Product_ID}}" title="View Product">{{$product->ProductName}}</a></h4>
-                                <p class="card-text">{{$product->Description}}</p>
+                                <h4 class="card-title"><a href="/products/{{$product->id}}" title="View Product">{{$product->name}}</a></h4>
+                                <p class="card-text">{{$product->description}}</p>
                                 <div class="row">
                                     <div class="col">
-                                        <p class="btn btn-danger btn-block">{{$product->Price}} $</p>
+                                        <p class="btn btn-danger btn-block">{{$product->price}} $</p>
                                     </div>
                                     <div class="col">
-                                    <a href="{{route('product.addToCart', ['id' => $product->Product_ID])}}" class="btn btn-success btn-block">Add to cart</a>
+                                    <a href="{{route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success btn-block">Add to cart</a>
                                    
                                     </div>
                                 </div>
@@ -63,3 +63,11 @@
     </div>
 </div>
 @endsection
+
+
+<script>
+
+
+    </script>
+    
+

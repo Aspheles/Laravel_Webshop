@@ -113,17 +113,17 @@
                         @foreach($filteredproducts as $filteredproduct)
                         <div class="col-5">
                             <div class="card m-2 ">
-                                <img class="card-img-top " src="../images/{{$filteredproduct->Image}}" alt="Card image cap">
+                                <img class="card-img-top " src="../images/{{$filteredproduct->image}}" alt="Card image cap">
                                 <div class="card-body">
-                                    <h4 class="card-title"><a href="/products/{{$filteredproduct->Product_ID}}" title="View Product">{{$filteredproduct->ProductName}}</a></h4>
-                                    <p class="card-text">{{$filteredproduct->Description}}</p>
+                                    <h4 class="card-title"><a href="/products/{{$filteredproduct->id}}" title="View Product">{{$filteredproduct->name}}</a></h4>
+                                    <p class="card-text">{{$filteredproduct->description}}</p>
                                     {{-- <p>Category id: {{$filteredproduct->category_id}}</p> --}}
                                     <div class="row">
                                         <div class="col">
-                                            <p class="btn btn-danger btn-block">{{$filteredproduct->Price}} $</p>
+                                            <p class="btn btn-danger btn-block">{{$filteredproduct->price}} $</p>
                                         </div>
                                         <div class="col">
-                                            <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                                            <a href="{{route('product.addToCart', ['id' => $filteredproduct->id])}}" class="btn btn-success btn-block">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>

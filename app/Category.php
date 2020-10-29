@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     // Table Name
-    protected $table = 'category';
+    protected $table = 'categories';
     // Primary Key
     public $primaryKey = "id";
     // Timestamps

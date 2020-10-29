@@ -76,8 +76,8 @@
                         @foreach($products as $product)
                         {{-- {{dd($product)}} --}}
                         <tr>
-                            <td><img height="50" src="../images/{{$product['item']['Image']}}" /> </td>
-                            <td>{{$product['item']['ProductName']}}</td>
+                            <td><img height="50" src="../images/{{$product['item']['image']}}" /> </td>
+                            <td>{{$product['item']['name']}}</td>
                             <td>In stock</td>
                             <td style="text-align: center">{{$product['qty']}}</td>
                             <td class="text-right">{{$product['price']}}</td>
@@ -122,16 +122,20 @@
                     <a href="/categories" class="btn btn-lg btn-block btn-warning text-uppercase">Continue Shopping</a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <a class="btn btn-lg btn-block btn-success text-uppercase">Checkout</a>
+                    <a href="{{route('product.getCheckout')}}" class="btn btn-lg btn-block btn-success text-uppercase">Checkout</a>
                 </div>
             </div>
         </div>
         @else
-
-        <h2 style="text-align: center; margin: 20px;">No Products in Shopping cart</h2>
+        {{-- <div class="alert alert-danger m-3">
+            <h2 style="text-align: center; margin: 20px;">No Products found in Shopping cart</h2>
+        </div> --}}
+       
         @endif
         
     </div>
 </div>
 
 @endsection
+
+

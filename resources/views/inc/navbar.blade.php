@@ -36,18 +36,16 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
-                </li>
+                </li> --}}
                 <li class="nav-item active">
                     <a class="nav-link" href="/categories">Store</a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="/products">Products</a>
                 </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart">Cart</a>
-                </li>
+               
                 <li class="nav-item">
                     <a class="nav-link" href="/about">Contact</a>
                 </li>
@@ -64,13 +62,13 @@
                 </div>
                 <a class="btn btn-success btn-sm ml-3" href="{{route('product.getShoppingCart')}}">
                     <i class="fa fa-shopping-cart"></i> Cart
-                    <span class="badge badge-light">{{Session::has('cart') ? Session::get('cart')->totalQuantity > 0 : ''}}</span>
+                    <span class="badge badge-light">{{Session::has('cart') ? Session::get('cart')->totalQuantity  : ''}}</span>
                 </a>
                
                
                @if(Auth::check())
                 <a class="btn btn-danger btn-sm ml-3" href="{{route('user.profile')}}">
-                  <i class="fa fa-user"></i> User Profile
+                  <i class="fa fa-user"></i> Orders
                   <span class="badge badge-light"></span>
                 </a>
                 <a class="btn btn-danger btn-sm ml-3" href="{{route('user.logout')}}">

@@ -8,9 +8,9 @@ class Products extends Model
 {
      
      // Table Name
-     protected $table = 'product';
+     protected $table = 'products';
      // Primary Key
-     public $primaryKey = "Product_ID";
+     public $primaryKey = "id";
      // Timestamps
      public $timestamps = true;
 
