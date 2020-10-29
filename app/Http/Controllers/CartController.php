@@ -29,8 +29,6 @@ class CartController extends Controller
     }
 
     public function updateQuantity(Request $request, $id, $action){
-
-        
         $cart = Session::get('cart');
 
         if($cart != null){
@@ -49,15 +47,8 @@ class CartController extends Controller
             }
             
             // $cart->update($cart->items[$id], $product);
-            
-           
+        
             $this->updateCart($cart, $request);
-    
-            
-    
-            
-            
-            
         }
         
         return redirect()->route('product.getShoppingCart');
