@@ -9,6 +9,13 @@ use DB;
 
 class CategoryController extends Controller
 {
+
+     /**
+     * Display the shop page with all available products from the database
+     *
+     * @param  int $id product is that is being filtered
+     * @return \Illuminate\Http\Response
+     */
     function index(){
 
         $categories = Category::all();
@@ -18,36 +25,18 @@ class CategoryController extends Controller
 
 
      /**
-     * Display the specified resource.
+     * Display the shop page with the all the products in the database with the active filter on
      *
-     * @param  int  $id
+     * @param  int $id product is that is being filtered
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $categories = Category::all();
-
         $currentCategory = Category::where("id", $id)->get();
 
-        //$filteredproducts = Products::where('category_id', $id)->get();
-
-
-        //$posts = DB::select('SELECT * FROM posts');
-
-        //$filteredproducts = DB::select('SELECT * FROM `product` WHERE `category_id` = :id', ['id' => $id]);
-
-        //$filteredproducts = Products::find('category_id', $id)->get();
-
-        //$Allfilteredproducts = Products::all();
-        // $filteredproducts = $Allfilteredproducts->category_id->get();
-
-        // if($id == $filteredproducts){
-        //     return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts);
-        // }
         $filteredproducts = Products::where('categoryid', $id)->get();
         
-        //return view('categories/show')->with(['products'=> $products, 'categories'=> $categories]);
-
         return view('categories/show')->with('categories', $categories)->with('filteredproducts', $filteredproducts)->with('currentCategory', $currentCategory);
     }
 }

@@ -14,11 +14,8 @@ class CartController extends Controller
         
     /**
      *
-     * Opens the shoppingcart
-     *
-     * 
-     * @return shoppingcart view
-     *
+     * Display shoppingcart page
+     * @return \Illuminate\Http\Response with the 2 given arguments (products, totalPrice) so it can be applied to the shoppingcart page
      */
     
     public function getShoppingCart() {
@@ -34,6 +31,33 @@ class CartController extends Controller
 
     }
 
+
+     /**
+     * Add the item to the shoppingcart
+     * @param int {$id} product id
+     * @return \Illuminate\Http\Response
+     */
+    public function addToCart(Request $request, $id) {
+        // $request->session()->flush();
+        $product = Products::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->add($product, $product->id);
+        
+        
+        
+        $request->session()->put('cart',$cart);
+        return redirect()->back()->with('success',"$product->name has been added to your cart");
+
+    }
+
+
+    /**
+     * Changes the quantity value of the product in shoppingcart
+     * @param int {$id} this is the item id that is being sent trough the request
+     * @param string {$action} this checks the quantity will be increased or deducted from the current quantity
+     * @return \Illuminate\Http\Response
+     */
     public function updateQuantity(Request $request, $id, $action){
         $cart = Session::get('cart');
 
@@ -62,27 +86,27 @@ class CartController extends Controller
         
 
     }
-   
+    /**
+     * Removes the item from the shoppingcart
+     * @param int {$id} this is the item id that is being sent trough the request
+     * @return \Illuminate\Http\Response
+     */
     public function removeFromCart(Request $request, $id){
       
         $cart = Session::has('cart') ? Session::get('cart') : null;
         $product = Products::find($id);
 
-        //$cart->totalPrice -= $cart->items[$id]
-
         unset($cart->items[$id]);
         $this->updateCart($cart, $request);
-
-        // foreach($cart->items as $item){
-        //     if ($item[$id] == $id){               
-        //         $cart->delete($item, $id);         
-        //     }
-        // }
 
         return redirect()->route('product.getShoppingCart');         
     }
 
-
+    /**
+     * Updates the cart values to the correct amount
+     * @param object {$cart} this is the cart object so the values can be updated
+     * @return \Illuminate\Http\Response
+     */  
     public function updateCart($cart, $request){
         $cart->totalPrice = 0;
         $cart->totalQuantity = 0;
@@ -99,7 +123,11 @@ class CartController extends Controller
         }
     }
 
-
+    /**
+     * Displays the checkout page
+     * @param {number} this is the item id that is being sent trough the request
+     * @return \Illuminate\Http\Response with the 2 given arguments (products, totalPrice) so it can be applied to the checkout page
+     */
     public function getCheckout(){
         if(!Session::has('cart')){
             return redirect()->route('categories.index');
@@ -108,7 +136,11 @@ class CartController extends Controller
         return view('shop.checkout', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQuantity' => $cart->totalQuantity]);
     }
 
-
+     /**
+     * Sends the order information in a from as a Post request to be saved into the database, 
+     * when its done successfully cart session will be removed from the system
+     * @return \Illuminate\Http\Response
+     */
     public function postCheckout(Request $request){
         //Checking if cart exist so the purchase can be stored into the database
         if(!Session::has('cart')){
@@ -137,13 +169,16 @@ class CartController extends Controller
         return redirect()->route('categories.index')->with('success', 'Successfully purchased products!');
     }
 
-
+     /**
+     * Removes an active order from the database for the logged in user
+     * @param int {$id} the product id that was given so it can be compared
+     * @return \Illuminate\Http\Response
+     */
     public function cancelOrder($id){
         if(!Auth::check()){
             return redirect()->route('categories.index')->with('error', 'You are not logged in');
         }
-        // $orders = Auth::user()->orders;
-        // //$order = $orders->find($id);
+
         $order = Order::find($id);
         $order->delete();
         return redirect()->back()->with('success', 'Your order has been successfully canceled');

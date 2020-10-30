@@ -20,6 +20,13 @@ class Cart {
         }
 	}
     
+     /**
+     * Pushes the item into a object with the properties
+     *
+     * @param object {$item} product object
+     * @param int {$id} product id
+     * @return \Illuminate\Http\Response
+     */
 	public function add($item, $id) {
 
 		$storedItem = ['qty' => 0, 'price' => $item->price, 'item' => $item];
@@ -38,39 +45,4 @@ class Cart {
             
        
 	}
-  
-	public function update($itemInShoppingcart, $product) {
-
-    	
-        //$this->item[$id]['price'] = $item[$id] * $item->Price;
-        $itemInShoppingcart['price'] = $product->price * $itemInShoppingcart['qty'];
-        
-        
-
-    	// if ($this->items[$id]['quantity'] == 0) {
-    	// 	unset($this->items[$id]);
-        //     $this->totalQuantity--;
-    	// }    	
-
-    	// $this->totalPrice = 0;
-    	// 	foreach($this->items as $item) {
-    	// 		$this->totalPrice += $item['price'];    			
-    	// 	}
-
-        session()->put('cart', $this);
-    }
-
-    // public function updateTotalPrice($cart){
-    //     if($cart != null){
-
-    //     }
-    //     foreach ($this->items as $item) {
-    //         $this->totalPrice = 0;
-    //         $this->totalPrice +=  $item['price'];
-    //      }
-    // }
-
-    
-    
-
 }

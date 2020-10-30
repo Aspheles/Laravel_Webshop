@@ -1,5 +1,8 @@
 require('./bootstrap');
 
+
+//Checks if alert message is active and removes it from page after 3 seconds
+
 setInterval(function(){
     if(document.getElementById("success")){
         setTimeout(function(){

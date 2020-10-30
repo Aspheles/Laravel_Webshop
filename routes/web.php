@@ -60,7 +60,7 @@ Route::get('/removeFromCart/{id}', [
 
 
 Route::get('/addToCart/{id}', [
-	'uses' => 'ProductsController@addToCart',
+	'uses' => 'CartController@addToCart',
 	'as' => 'product.addToCart'
 ]);
 

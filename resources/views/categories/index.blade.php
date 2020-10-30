@@ -43,7 +43,7 @@
                         <div class="card m-2">
                             <img class="card-img-top d-flex align-items-stretch" src="../images/{{$product->image}}" alt="Card image cap">
                             <div class="card-body">
-                                <h4 class="card-title"><a href="/products/{{$product->id}}" title="View Product">{{$product->name}}</a></h4>
+                                <h4 class="card-title"><p title="View Product">{{$product->name}}</p></h4>
                                 <p class="card-text">{{$product->description}}</p>
                                 <div class="row">
                                     <div class="col">

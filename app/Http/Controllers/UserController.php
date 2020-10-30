@@ -8,10 +8,17 @@ use Auth;
 use App\Order;
 class UserController extends Controller
 {
+    /**
+     * Display register page
+     * @return \Illuminate\Http\Response
+     */
     public function getSignup(){
         return view('user.signup');
     }
-
+     /**
+     * Checks validations on the inputs given in the form and registers user into the database
+     * @return \Illuminate\Http\Response
+     */
     public function postSignup(Request $request){
         $this->validate($request, [
             'email' => 'email|required|unique:users',
@@ -29,10 +36,18 @@ class UserController extends Controller
         return redirect()->route('user.profile')->with('success', 'Account has been Created');
     }
 
+    /**
+     * Display login page
+     * @return \Illuminate\Http\Response
+     */
     public function getSignin(){
         return view('user.signin');
     }
 
+     /**
+     * Checks validations on the inputs given in the form and attempts to login
+     * @return \Illuminate\Http\Response
+     */
     public function postSignin(Request $request){
         $this->validate($request, [
             'email' => 'email|required',
@@ -45,7 +60,10 @@ class UserController extends Controller
             return redirect()->back()->with("error", "Username or Password is incorrect");
     }
 
-
+     /**
+     * Display profile page if user is logged in
+     * @return \Illuminate\Http\Response
+     */
     public function getProfile(){
         $order = Auth::user()->orders;
         $order->transform(function($order, $key){
@@ -55,6 +73,10 @@ class UserController extends Controller
         return view('user.profile', ['orders' => $order]);
     }
 
+     /**
+     * Logs user out
+     * @return \Illuminate\Http\Response
+     */
     public function getLogout(){
         Auth::logout();
         return redirect('/')->with("success", "You have successfully logged out");
