@@ -23,7 +23,7 @@
         <div class="panel-footer">
             <strong>Total Price: €{{$order->cart->totalPrice}}</strong>
         </div>
-        <button class="btn btn-sm btn-danger m-2" disabled>Cancel order</button>
+        <a href="{{route('product.cancelOrder', ['id' => $order->id])}}" class="btn btn-sm btn-danger m-2 text-white">Cancel order</a>
         <hr>
     </div>
     @endforeach

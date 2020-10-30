@@ -53,16 +53,11 @@ Route::post('/checkout', [
 ]);
 
 
-
 Route::get('/removeFromCart/{id}', [
 	'uses' => 'CartController@removeFromCart',
 	'as' => 'product.removeFromCart'	
 ]);
 
-// Route::post('/saveOrder', [
-// 	'uses' => 'CartController@saveOrder',
-// 	'as' => 'shop.saveOrder'		
-// ]);
 
 Route::get('/addToCart/{id}', [
 	'uses' => 'ProductsController@addToCart',
@@ -110,6 +105,11 @@ Route::group(['prefix'=> 'user'], function(){
         Route::get('/logout', [
             'uses'=> 'UserController@getLogout',
             'as'=> 'user.logout'
+        ]);
+
+        Route::get('/profile/{id}', [
+            'uses'=> 'CartController@cancelOrder',
+            'as'=> 'product.cancelOrder'
         ]);
     });
     

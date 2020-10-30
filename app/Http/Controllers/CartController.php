@@ -11,10 +11,16 @@ use Auth;
 
 class CartController extends Controller
 {
+        
+    /**
+     *
+     * Opens the shoppingcart
+     *
+     * 
+     * @return shoppingcart view
+     *
+     */
     
-     /* 
-    * Functie haalt de shoppingcart op en geeft deze mee aan de view
-    */
     public function getShoppingCart() {
     	if (!Session::has('cart')) {
             //return view('shop.shopping-cart')->with('error', 'Error, geen shoppingcart gevonden !');
@@ -129,5 +135,17 @@ class CartController extends Controller
         session()->forget('cart');
         
         return redirect()->route('categories.index')->with('success', 'Successfully purchased products!');
+    }
+
+
+    public function cancelOrder($id){
+        if(!Auth::check()){
+            return redirect()->route('categories.index')->with('error', 'You are not logged in');
+        }
+        // $orders = Auth::user()->orders;
+        // //$order = $orders->find($id);
+        $order = Order::find($id);
+        $order->delete();
+        return redirect()->back()->with('success', 'Your order has been successfully canceled');
     }
 }

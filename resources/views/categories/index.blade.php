@@ -47,7 +47,7 @@
                                 <p class="card-text">{{$product->description}}</p>
                                 <div class="row">
                                     <div class="col">
-                                        <p class="btn btn-danger btn-block">{{$product->price}} $</p>
+                                        <p class="btn btn-danger btn-block">€{{$product->price}}</p>
                                     </div>
                                     <div class="col">
                                     <a href="{{route('product.addToCart', ['id' => $product->id])}}" class="btn btn-success btn-block">Add to cart</a>

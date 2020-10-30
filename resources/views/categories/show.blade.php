@@ -120,7 +120,7 @@
                                     {{-- <p>Category id: {{$filteredproduct->category_id}}</p> --}}
                                     <div class="row">
                                         <div class="col">
-                                            <p class="btn btn-danger btn-block">{{$filteredproduct->price}} $</p>
+                                            <p class="btn btn-danger btn-block">€{{$filteredproduct->price}}</p>
                                         </div>
                                         <div class="col">
                                             <a href="{{route('product.addToCart', ['id' => $filteredproduct->id])}}" class="btn btn-success btn-block">Add to cart</a>

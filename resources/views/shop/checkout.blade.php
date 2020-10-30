@@ -28,7 +28,7 @@
                 <div class="col-md-6 mb-2">
                   <!--firstName-->
                   <div class="md-form ">
-                    <input type="text" id="firstName" class="form-control">
+                    <input required type="text" id="firstName" class="form-control">
                     <label for="firstName" class="">First name</label>
                   </div>
 
@@ -40,8 +40,8 @@
 
                   <!--lastName-->
                   <div class="md-form">
-                    <input name="name" type="text" id="lastName" class="form-control">
-                    <label for="lastName" class="">Last name</label>
+                    <input required name="name" type="text" id="lastName" class="form-control">
+                    <label  for="lastName" class="">Last name</label>
                   </div>
 
                 </div>
@@ -53,13 +53,13 @@
               
               <!--email-->
               <div class="md-form mb-3">
-                <input name="email" type="text" id="email" class="form-control" placeholder="youremail@example.com">
-                <label for="email" class="">Email (optional)</label>
+                <input required name="email" type="text" id="email" class="form-control" placeholder="youremail@example.com">
+                <label for="email" class="">Email</label>
               </div>
 
               <!--address-->
               <div class="md-form mb-3">
-                <input name="address" type="text" id="address" class="form-control" placeholder="1234 Main St">
+                <input required name="address" type="text" id="address" class="form-control" placeholder="1234 Main St">
                 <label for="address" class="">Address</label>
               </div>
 
