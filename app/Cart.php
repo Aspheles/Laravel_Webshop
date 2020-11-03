@@ -44,5 +44,26 @@ class Cart {
        
             
        
-	}
+    }
+    
+    /**
+     * Updates the cart values to the correct amount
+     * @param object {$cart} this is the cart object so the values can be updated
+     * @return \Illuminate\Http\Response
+     */  
+    public function update($cart){
+        $cart->totalPrice = 0;
+        $cart->totalQuantity = 0;
+
+        foreach($cart->items as $item){
+            $cart->totalPrice = $cart->totalPrice += $item['price'];
+            $cart->totalQuantity = $cart->totalQuantity + $item['qty'];
+
+        }
+
+        if($cart->totalQuantity <= 0){
+            session()->forget('cart');
+            return redirect()->route('categories.index');
+        }
+    }
 }

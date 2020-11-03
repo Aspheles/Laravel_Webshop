@@ -25,7 +25,7 @@ class CartController extends Controller
     	}
     	$oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
-        
+        $cart->update($cart);
         
     	return view('shop.shopping-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
 
@@ -43,7 +43,7 @@ class CartController extends Controller
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($product, $product->id);
-        
+       
         
         
         $request->session()->put('cart',$cart);
@@ -76,9 +76,8 @@ class CartController extends Controller
                 $cart->items[$id]['price'] = $product->price * $cart->items[$id]['qty'];
             }
             
-            // $cart->update($cart->items[$id], $product);
-        
-            $this->updateCart($cart, $request);
+            
+
         }
         
         return redirect()->route('product.getShoppingCart');
@@ -97,31 +96,13 @@ class CartController extends Controller
         $product = Products::find($id);
 
         unset($cart->items[$id]);
-        $this->updateCart($cart, $request);
+       
+       
 
         return redirect()->route('product.getShoppingCart');         
     }
 
-    /**
-     * Updates the cart values to the correct amount
-     * @param object {$cart} this is the cart object so the values can be updated
-     * @return \Illuminate\Http\Response
-     */  
-    public function updateCart($cart, $request){
-        $cart->totalPrice = 0;
-        $cart->totalQuantity = 0;
-
-        foreach($cart->items as $item){
-            $cart->totalPrice = $cart->totalPrice += $item['price'];
-            $cart->totalQuantity = $cart->totalQuantity + $item['qty'];
-
-        }
-
-        if($cart->totalQuantity <= 0){
-            $request->session()->flush();
-            return redirect()->route('categories.index');
-        }
-    }
+    
 
     /**
      * Displays the checkout page

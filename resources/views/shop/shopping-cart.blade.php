@@ -1,58 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <div class="row justify-content-center m-5">
-    <h1>Shopping Cart</h1>
-    @if(Session::has('cart'))
-    <div class="row">
-        <div class="col-sm-6 col-md-6">
-            <ul class="list-group">
-                @foreach($products as $product)
-                    <li class="list-group-item">
-                        <span class="badge">{{$product['qty']}}</span>
-                        <strong>{{$product['item']['title']}}</strong>
-                        <span class="label label-success">{{$product['price']}}</span>
-                        <div class="btn-group">
-                            <button type="button" data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle">
-                                Action: <span class="caret"></span>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"></a>Reduce by 1</li>
-                                    <li><a href="#"></a>Reduce All</li>
-                                    
-                                </ul>
-                            </button>
-                        </div>
-
-                    </li>
-
-                @endforeach
-            </ul>
-        </div>
-        <div class="row">
-            <div class="col-sm-6 col-md-6">
-                <strong>Total: {{$totalPrice}}</strong>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-sm-6 col-md-6">
-                <button class="btn btn-success" type="button">Checkout</button>
-            </div>
-        </div>
-    </div>
-
-    @else
-    <div class="row">
-        <div class="col-sm-6 col-md-6">
-            <h2>No Items in Cart</h2>
-        </div>
-    </div>
-
-    @endif
-        
-</div> --}}
-
-
 <div class="container mb-4">
     @if(Session::has('cart'))
     <div class="row">
@@ -127,9 +75,9 @@
             </div>
         </div>
         @else
-        {{-- <div class="alert alert-danger m-3">
+        <div class="alert alert-danger m-3">
             <h2 style="text-align: center; margin: 20px;">No Products found in Shopping cart</h2>
-        </div> --}}
+        </div>
        
         @endif
         
