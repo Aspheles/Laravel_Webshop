@@ -52,6 +52,7 @@ class Cart {
      * @return \Illuminate\Http\Response
      */  
     public function update($cart){
+        
         $cart->totalPrice = 0;
         $cart->totalQuantity = 0;
 
@@ -60,7 +61,7 @@ class Cart {
             $cart->totalQuantity = $cart->totalQuantity + $item['qty'];
 
         }
-
+        
         if($cart->totalQuantity <= 0){
             session()->forget('cart');
             return redirect()->route('categories.index');
