@@ -18,4 +18,9 @@ class Products extends Model
 
 
      protected $fillable = ['name', 'description', 'price', 'image', 'brand', 'categoryid'];
+
+     public function orders(){
+          return $this->belongsToMany('App\Products');
+     }
+
 }

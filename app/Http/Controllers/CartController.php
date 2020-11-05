@@ -8,6 +8,8 @@ use Session;
 use App\Cart;
 use App\Order;
 use Auth;
+use App\ordersproducts;
+use DB;
 
 class CartController extends Controller
 {
@@ -26,11 +28,14 @@ class CartController extends Controller
     	$oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
         $cart->update($cart);
+
+        if($cart->update($cart)) {
+            return redirect()->route('categories.index');
+        }
         
     	return view('shop.shopping-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
 
     }
-
 
      /**
      * Add the item to the shoppingcart
@@ -42,11 +47,11 @@ class CartController extends Controller
         $product = Products::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
-        $cart->add($product, $product->id);
+        $cart->add($product, $product->id, $request);
        
         
         
-        $request->session()->put('cart',$cart);
+        //$request->session()->put('cart',$cart);
         return redirect()->back()->with('success',"$product->name has been added to your cart");
 
     }
@@ -59,25 +64,14 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateQuantity(Request $request, $id, $action){
-        $cart = Session::get('cart');
+        $oldCart = Session::get('cart');
 
-        if($cart != null){
-            $product = Products::find($id);
-
-            if($action == "add"){
-                $cart->items[$id]['qty']++;
-            }else{
-                $cart->items[$id]['qty']--;
-            }
-    
-            if($cart->items[$id]['qty'] <= 0){
-               unset($cart->items[$id]);
-            }else{
-                $cart->items[$id]['price'] = $product->price * $cart->items[$id]['qty'];
-            }
+        if($oldCart != null){
+            $cart  = new Cart($oldCart);
+            $cart->updateQuantity($id, $action);
+            // $request->session()->put('cart',$cart);
             
             
-
         }
         
         return redirect()->route('product.getShoppingCart');
@@ -92,11 +86,12 @@ class CartController extends Controller
      */
     public function removeFromCart(Request $request, $id){
       
-        $cart = Session::has('cart') ? Session::get('cart') : null;
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $product = Products::find($id);
 
-        unset($cart->items[$id]);
-       
+        $cart = new Cart($oldCart);
+        $cart->removeFromCart($cart, $id);
+        //$request->session()->put('cart',$cart);
        
 
         return redirect()->route('product.getShoppingCart');         
@@ -132,10 +127,12 @@ class CartController extends Controller
 
         //Create Order
         $order = new Order();
-        $order->cart = serialize($cart);
+        //$order->cart = serialize($cart);
         $order->name = $request->input('name');
         $order->address = $request->input('address');
         $order->email = $request->input('email');
+        $order->totalquantity = $cart->totalQuantity;
+        $order->totalamount = $cart->totalPrice;
 
         if(Auth::check()){
             Auth::user()->orders()->save($order);
@@ -143,6 +140,21 @@ class CartController extends Controller
             $order->user_id = 0;
         }
         $order->save();
+
+        //Save cart products
+
+        
+
+        foreach($cart->items as $data){
+            $OrderPro = new ordersproducts();
+            $OrderPro->order_id = $order->id;
+            $OrderPro->product_id = $data['item']['id'];
+            $OrderPro->item_name = $data['item']['name'];
+            $OrderPro->price = $data['price'];
+            $OrderPro->quantity = $data['qty'];
+            $OrderPro->save();
+
+        }
 
         //Empty the shoppingcart after purchase
         session()->forget('cart');

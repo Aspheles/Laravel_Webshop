@@ -17,10 +17,12 @@ class CreateOrderTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('user_id');
-            $table->text('cart');
+            //$table->text('cart');
             $table->text('address');
             $table->string('name');
             $table->string('email');
+            $table->integer("totalquantity");
+            $table->integer("totalamount");
         });
     }
 

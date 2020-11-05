@@ -18,6 +18,8 @@ class Cart {
             $this->totalQuantity = $oldCart->totalQuantity;
             $this->totalPrice = $oldCart->totalPrice;
         }
+
+        session()->put('cart',$this);
 	}
     
      /**
@@ -27,7 +29,7 @@ class Cart {
      * @param int {$id} product id
      * @return \Illuminate\Http\Response
      */
-	public function add($item, $id) {
+	public function add($item, $id, $request) {
 
 		$storedItem = ['qty' => 0, 'price' => $item->price, 'item' => $item];
         if($this->items){
@@ -42,7 +44,7 @@ class Cart {
         $this->totalQuantity++;
         $this->totalPrice += $item->price;
        
-            
+        
        
     }
     
@@ -64,7 +66,35 @@ class Cart {
         
         if($cart->totalQuantity <= 0){
             session()->forget('cart');
-            return redirect()->route('categories.index');
+            return true;
         }
+
+        //session()->put('cart',$this);
+        
     }
+
+    public function updateQuantity($id, $action){
+            $product = Products::find($id);
+           
+            if($action == "add"){
+                $this->items[$id]['qty']++;
+                //dd($this->items);
+            }else{
+                $this->items[$id]['qty']--;
+            }
+    
+            if($this->items[$id]['qty'] <= 0){
+               unset($this->items[$id]);
+            }else{
+                $this->items[$id]['price'] = $product->price * $this->items[$id]['qty'];
+            }
+
+            
+    }
+
+    public function removeFromCart($cart, $id){
+        unset($cart->items[$id]);
+    }
+
+    
 }

@@ -77,7 +77,7 @@
         @else
        
        
-        <div class="alert alert-danger m-3">
+        <div class="alert alert-danger m-3 p">
             <h2 style="text-align: center; margin: 20px;">No Products found in Shopping cart</h2>
         </div>
         <script>window.location = "{{ route('categories.index') }}";</script>
