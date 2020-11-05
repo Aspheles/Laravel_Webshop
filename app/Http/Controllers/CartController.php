@@ -30,7 +30,7 @@ class CartController extends Controller
         $cart->update($cart);
 
         if($cart->update($cart)) {
-            return redirect()->route('categories.index');
+            return redirect()->route('categories.index')->with("error", "Your cart is empty");
         }
         
     	return view('shop.shopping-cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
@@ -171,7 +171,13 @@ class CartController extends Controller
         if(!Auth::check()){
             return redirect()->route('categories.index')->with('error', 'You are not logged in');
         }
+        // dd($products);
 
+        //Remove products that belonged to the order
+        $products = ordersproducts::where("order_id", $id)->delete();
+        
+    
+        
         $order = Order::find($id);
         $order->delete();
         return redirect()->back()->with('success', 'Your order has been successfully canceled');

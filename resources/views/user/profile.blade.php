@@ -9,10 +9,11 @@
     <div class="panel panel-default m-3">
         <div class="panel-body">
             <ul class="list-group">
-                @foreach($order->cart->items as $item)
+                @foreach($items as $item)
+
                 <li class="list-group-item">
                     <span class="badge">€{{$item['price']}}</span>
-                    {{$item['item']['name']}} <span class="badge badge-secondary badge-pill">{{$item['qty']}}</span>
+                    {{$item['item_name']}} <span class="badge badge-secondary badge-pill">{{$item['quantity']}}</span>
                 </li>
                
                 
@@ -21,7 +22,7 @@
             </ul>
         </div>
         <div class="panel-footer">
-            <strong>Total Price: €{{$order->cart->totalPrice}}</strong>
+            <strong>Total Price: €{{$order->totalamount}}</strong>
         </div>
         <a href="{{route('product.cancelOrder', ['id' => $order->id])}}" class="btn btn-sm btn-danger m-2 text-white">Cancel order</a>
         <hr>

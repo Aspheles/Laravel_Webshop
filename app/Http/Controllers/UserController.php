@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use App\Order;
+use App\ordersproducts;
+
 class UserController extends Controller
 {
     /**
@@ -65,12 +67,27 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getProfile(){
-        $order = Auth::user()->orders;
-        $order->transform(function($order, $key){
-            $order->cart = unserialize($order->cart);
-            return $order;
-        });
-        return view('user.profile', ['orders' => $order]);
+        $id = Auth::user()->id;
+        
+        $item = Order::where("user_id", $id)->get();
+        //$products = Order::where('')
+        $orders = ordersproducts::all();
+        $products = Order::all();
+        $foundProducts = [];
+
+       //Looping trough orders
+        for($i = 0; $i < count($orders); $i++){
+            //Looping trough products
+            for($z = 0; $z < count($products); $z++){
+                //Checking if product id matches the order id and checking if its belongs to that user
+                if($products[$z]->id == $orders[$i]->order_id && $id == $products[$z]->user_id){
+                    //Save the data into a list so it can be passed to the view
+                    array_push($foundProducts, $orders[$i]);
+                }
+            }
+        }
+       
+        return view('user.profile', ['orders' => $item, 'items' => $foundProducts]);
     }
 
      /**
