@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use App\Order;
 use App\ordersproducts;
+use App\Products;
 
 class UserController extends Controller
 {
@@ -73,8 +74,13 @@ class UserController extends Controller
         //$products = Order::where('')
         $orders = ordersproducts::all();
         $products = Order::all();
-        $foundProducts = [];
 
+        $itemProducts = Products::all();
+        $foundProducts = [];
+        $data = [];
+        $itemFound = [];
+
+       
        //Looping trough orders
         for($i = 0; $i < count($orders); $i++){
             //Looping trough products
@@ -86,8 +92,26 @@ class UserController extends Controller
                 }
             }
         }
+         
+        //dd($foundProducts);
+
+        for($i = 0; $i < count($foundProducts); $i++){
+            for($z = 0; $z < count($itemProducts); $z++){
+                if($itemProducts[$z]->id == $foundProducts[$i]->product_id){
+                   
+                    $itemFound['name'] = $itemProducts[$z]->name;
+                    $itemFound['qty'] = $foundProducts[$i]->quantity;
+                    $itemFound['price'] = $itemProducts[$z]->price;
+                    
+                    array_push($data, $itemFound);
+                    
+                }
+            }
+            
+        }
+    
        
-        return view('user.profile', ['orders' => $item, 'items' => $foundProducts]);
+        return view('user.profile', ['orders' => $item, 'items' => $data]);
     }
 
      /**

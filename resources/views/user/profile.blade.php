@@ -10,10 +10,10 @@
         <div class="panel-body">
             <ul class="list-group">
                 @foreach($items as $item)
-
+                
                 <li class="list-group-item">
                     <span class="badge">€{{$item['price']}}</span>
-                    {{$item['item_name']}} <span class="badge badge-secondary badge-pill">{{$item['quantity']}}</span>
+                    {{$item['name']}} <span class="badge badge-secondary badge-pill">{{$item['qty']}}</span>
                 </li>
                
                 

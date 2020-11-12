@@ -25,8 +25,8 @@ class CartController extends Controller
             //return view('shop.shopping-cart')->with('error', 'Error, geen shoppingcart gevonden !');
             return redirect()->route("categories.index")->with("error", "Your cart is empty");
     	}
-    	$oldCart = Session::get('cart');
-        $cart = new Cart($oldCart);
+    	//$oldCart = Session::get('cart');
+        $cart = new Cart();
         $cart->update($cart);
 
         if($cart->update($cart)) {
@@ -45,8 +45,8 @@ class CartController extends Controller
     public function addToCart(Request $request, $id) {
         // $request->session()->flush();
         $product = Products::find($id);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
+        //$oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart();
         $cart->add($product, $product->id, $request);
        
         
@@ -64,20 +64,11 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateQuantity(Request $request, $id, $action){
-        $oldCart = Session::get('cart');
 
-        if($oldCart != null){
-            $cart  = new Cart($oldCart);
-            $cart->updateQuantity($id, $action);
-            // $request->session()->put('cart',$cart);
-            
-            
-        }
-        
+        $cart  = new Cart();
+        $cart->updateQuantity($id, $action);
+       
         return redirect()->route('product.getShoppingCart');
-        
-        
-
     }
     /**
      * Removes the item from the shoppingcart
@@ -86,14 +77,11 @@ class CartController extends Controller
      */
     public function removeFromCart(Request $request, $id){
       
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $product = Products::find($id);
 
-        $cart = new Cart($oldCart);
+        $cart = new Cart();
         $cart->removeFromCart($cart, $id);
-        //$request->session()->put('cart',$cart);
-       
-
+        
         return redirect()->route('product.getShoppingCart');         
     }
 
@@ -108,7 +96,7 @@ class CartController extends Controller
         if(!Session::has('cart')){
             return redirect()->route('categories.index');
         }
-        $cart = Session::get('cart');
+        $cart = new Cart();
         return view('shop.checkout', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice, 'totalQuantity' => $cart->totalQuantity]);
     }
 
@@ -123,41 +111,34 @@ class CartController extends Controller
             return redirect()->route('categories.index');
         }
 
-        $cart = Session::get('cart');
+        $cart = new Cart();
 
-        //Create Order
-        $order = new Order();
-        //$order->cart = serialize($cart);
-        $order->name = $request->input('name');
-        $order->address = $request->input('address');
-        $order->email = $request->input('email');
-        $order->totalquantity = $cart->totalQuantity;
-        $order->totalamount = $cart->totalPrice;
-
+        $userId = 0;
         if(Auth::check()){
-            Auth::user()->orders()->save($order);
-        }else{
-            $order->user_id = 0;
+            $userId = Auth::user()->id;
         }
+        //Create Order
+        $order = Order::create([
+            'name' => $request->input('name'),
+            'address' =>  $request->input('address'),
+            'email' => $request->input('email'),
+            'totalquantity' =>  $cart->totalQuantity,
+            'totalamount' => $cart->totalPrice,
+            'user_id' => $userId
+        ]);
+
+      
+        //foreach uit sessie
+        foreach($cart->items as $product){
+            $order->products()->attach([$product['item']['id']=>['quantity' => $product['qty']]]);
+        }
+        
         $order->save();
 
-        //Save cart products
-
         
-
-        foreach($cart->items as $data){
-            $OrderPro = new ordersproducts();
-            $OrderPro->order_id = $order->id;
-            $OrderPro->product_id = $data['item']['id'];
-            $OrderPro->item_name = $data['item']['name'];
-            $OrderPro->price = $data['price'];
-            $OrderPro->quantity = $data['qty'];
-            $OrderPro->save();
-
-        }
-
         //Empty the shoppingcart after purchase
-        session()->forget('cart');
+        $cart->forgetSession();
+        //session()->forget('cart');
         
         return redirect()->route('categories.index')->with('success', 'Successfully purchased products!');
     }

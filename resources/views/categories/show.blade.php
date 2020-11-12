@@ -43,7 +43,7 @@
                             <div class="card m-2 ">
                                 <img class="card-img-top " src="../images/{{$filteredproduct->image}}" alt="Card image cap">
                                 <div class="card-body">
-                                    <h4 class="card-title"><p title="View Product">{{$filteredproduct->name}}</p></h4>
+                                    <h4 class="card-title"><a href="/products/{{$filteredproduct->id}}" title="View Product">{{$filteredproduct->name}}</a></h4>
                                     <p class="card-text">{{$filteredproduct->description}}</p>
                                     {{-- <p>Category id: {{$filteredproduct->category_id}}</p> --}}
                                     <div class="row">

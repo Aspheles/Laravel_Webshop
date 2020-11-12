@@ -20,7 +20,7 @@ class Products extends Model
      protected $fillable = ['name', 'description', 'price', 'image', 'brand', 'categoryid'];
 
      public function orders(){
-          return $this->belongsToMany('App\Products');
+          return $this->belongsToMany('App\Order', 'ordersproducts', 'product_id', 'order_id')->withPivot('quantity');
      }
 
 }
